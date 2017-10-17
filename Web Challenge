@@ -1,0 +1,75 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package Service;
+
+import bean.PatientBean;
+import java.io.IOException;
+import org.apache.http.client.ClientProtocolException;
+import org.junit.After;
+import org.junit.AfterClass;
+import org.junit.Before;
+import org.junit.BeforeClass;
+import org.junit.Test;
+import static org.junit.Assert.*;
+import java.util.*;
+import static jxl.biff.BaseCellFeatures.logger;
+import org.apache.commons.lang3.RandomStringUtils;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.client.methods.HttpUriRequest;
+import org.apache.http.impl.client.HttpClientBuilder;
+import org.apache.http.HttpRequest;
+import org.apache.http.HttpResponse;
+import org.apache.http.HttpStatus;
+import static org.hamcrest.CoreMatchers.equalTo;
+
+
+/**
+ *
+ * @author keert
+ */
+import org.apache.http.HttpEntity;
+import org.apache.http.entity.ContentType;
+public class AppJunitTest {
+   
+    
+        @Test
+public void apiTest()
+  throws ClientProtocolException, IOException {
+  
+   // Given
+   HttpUriRequest request = new HttpGet( "https://restcountries.eu/rest/v2/alpha/AF");
+ 
+   // When
+   HttpResponse httpResponse = HttpClientBuilder.create().build().execute( request );
+   // Then
+   assertThat(
+           
+     httpResponse.getStatusLine().getStatusCode(),
+     equalTo(HttpStatus.SC_NOT_FOUND));
+   String mimeType = ContentType.getOrDefault(httpResponse.getEntity()).getMimeType();
+   //assertEquals("application.json", mimeType);
+   JSONObject obj = new JSONObject(httpResponse);
+   
+}
+    
+
+
+@Test
+public static int getNumOfCharacters(String alpha2Code){
+        int i = 0;
+        System.out.println("alpha2Code");
+        String alpha2code = "AF";
+        int numChars = 2;
+        char userChars = '?';
+        for (i = 0; i < alpha2code.length(); ++i){
+            userChars = alpha2code.charAt(i);
+            numChars = numChars +1 ; 
+            
+        }
+        return numChars;
+    }
+}
+        
